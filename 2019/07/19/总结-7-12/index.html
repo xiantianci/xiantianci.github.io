@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2019/7 | Hexo</title>
+  <title>$总结-7/12 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2019/07/index.html">
+  <meta name="description" content="1.SpringMVC运行原理如果在web.xml中设置DispatcherServlet的&amp;lt;url-pattern&amp;gt;为/时，当用户发起请求，请求一个控制器时，会先执行DispatcherServlet，由DispatcherServlet去调用HandlerMapping，具体调用HandlerMapping的哪个实现类根据实际配置。如果使用的是注解方式 会调用DefaultAnno">
+<meta property="og:type" content="article">
+<meta property="og:title" content="$总结-7&#x2F;12">
+<meta property="og:url" content="http://yoursite.com/2019/07/19/总结-7-12/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.SpringMVC运行原理如果在web.xml中设置DispatcherServlet的&amp;lt;url-pattern&amp;gt;为/时，当用户发起请求，请求一个控制器时，会先执行DispatcherServlet，由DispatcherServlet去调用HandlerMapping，具体调用HandlerMapping的哪个实现类根据实际配置。如果使用的是注解方式 会调用DefaultAnno">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-19T14:41:17.346Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="$总结-7&#x2F;12">
+<meta name="twitter:description" content="1.SpringMVC运行原理如果在web.xml中设置DispatcherServlet的&amp;lt;url-pattern&amp;gt;为/时，当用户发起请求，请求一个控制器时，会先执行DispatcherServlet，由DispatcherServlet去调用HandlerMapping，具体调用HandlerMapping的哪个实现类根据实际配置。如果使用的是注解方式 会调用DefaultAnno">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,157 +154,178 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-总结-7-12" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      $总结-7/12
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/19/总结-7-12/" class="archive-article-date">
+
+        
+        <a href="/2019/07/19/总结-7-12/" class="archive-article-date">
   	<time datetime="2019-07-19T14:36:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-19</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/19/总结-7-12/">$总结-7/12</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-SpringMVC运行原理"><a href="#1-SpringMVC运行原理" class="headerlink" title="1.SpringMVC运行原理"></a>1.SpringMVC运行原理</h1><pre><code>如果在web.xml中设置DispatcherServlet的&lt;url-pattern&gt;为/时，当用户发起请求，请求一个控制器时，会先执行DispatcherServlet，由DispatcherServlet去调用HandlerMapping，具体调用HandlerMapping的哪个实现类根据实际配置。如果使用的是注解方式 会调用DefaultAnnotationHandlerMapping去解析url，解析后调用HandlerAdapter中的AnnotationMethodHandlerAdapter去调用controller中的HandlerMethod。当HandlerMethod执行后会返回一个View，ViewResovler进行视图解析，解析后调用执行jsp文件对应的.class文件，最终把运行.class文件的结果响应给客户端。</code></pre><p>以上就是springmvc的执行原理。</p>
+<h1 id="2-springIOC"><a href="#2-springIOC" class="headerlink" title="2.springIOC"></a>2.springIOC</h1><h2 id="ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现"><a href="#ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现" class="headerlink" title="ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现"></a>ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现</h2><h2 id="2-1BeanFactory工厂的构建"><a href="#2-1BeanFactory工厂的构建" class="headerlink" title="2.1BeanFactory工厂的构建"></a>2.1BeanFactory工厂的构建</h2><pre><code>BeanFactory是ApplicationContext的父接口。是spring框架中的顶级容器工厂对象。
+BeanFactory只能管理bean对象，没有其他功能。比如说：AOP切面管理，propertyplaceholder的加载等。</code></pre><p>构建BeanFactory的作用就是为了管理bean对象。</p>
+<h2 id="2-2创建BeanFactory中管理的bean对象。"><a href="#2-2创建BeanFactory中管理的bean对象。" class="headerlink" title="2.2创建BeanFactory中管理的bean对象。"></a>2.2创建BeanFactory中管理的bean对象。</h2><pre><code>//配置beanfactory工厂的一些属性
+prepareBeanFactory(beanFactory);
 
-        <div class="article-info info-on-right">
-          
-          
 
+postProcessBeanFactory(beanFactory);加载配置beanfactory中无法处理的一些属性，如propertyplaceholder
+
+invokeBeanFactoryPostProcessors（beanFactory）；
+将上一步加载的内容，作为一个容器可以管理的bean对象注册到applicationcontext容器中。
+
+registerBeanPostProcessors（beanFactory）继续完成上一步的注册操作。
+到此配置文件中配置的bean对象都创建并注册完成。
+
+initMessageSource() ；i18n。初始化国际化消息源。
+initApplicationEventMulticaster();初始化多播事件。如ApplicationEvent事件。是spring框架中的观察者模式实现机制
+onRefresh();初始化主题资源。（ThemeSource）spring框架提供的视图主题信息。
+registerListeners();// Check for listener beans and register them.
+创建监听器，并注册
+
+finishBeanFactoryInitialization(beanFactory);
+初始化配置中出现的所有的lazy-init=false的bean对象，且bean对象必须是单例的。
+finishRefresh();发布最终事件。</code></pre><h1 id="3-看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。"><a href="#3-看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。" class="headerlink" title="3.看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。"></a>3.看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。</h1>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/19/总结-7-12/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/18/总结-1/" class="archive-article-date">
-  	<time datetime="2019-07-18T14:16:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-18</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/18/总结-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">$总结</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/18/总结-1/">$总结</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-019/7/17">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/17/总结/" class="archive-article-date">
-  	<time datetime="2019-07-17T13:48:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/17/总结/">总结</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/17/wo-de-first-wen-zhang/" class="archive-article-date">
-  	<time datetime="2019-07-17T02:34:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/17/wo-de-first-wen-zhang/">wo de first wen zhang</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/17/hello-world/" class="archive-article-date">
-  	<time datetime="2019-07-17T02:27:16.859Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/17/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -323,8 +348,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

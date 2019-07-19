@@ -152,6 +152,91 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-总结-7-12" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/19/总结-7-12/">$总结-7/12</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/19/总结-7-12/" class="archive-article-date">
+  	<time datetime="2019-07-19T14:36:05.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-SpringMVC运行原理"><a href="#1-SpringMVC运行原理" class="headerlink" title="1.SpringMVC运行原理"></a>1.SpringMVC运行原理</h1><pre><code>如果在web.xml中设置DispatcherServlet的&lt;url-pattern&gt;为/时，当用户发起请求，请求一个控制器时，会先执行DispatcherServlet，由DispatcherServlet去调用HandlerMapping，具体调用HandlerMapping的哪个实现类根据实际配置。如果使用的是注解方式 会调用DefaultAnnotationHandlerMapping去解析url，解析后调用HandlerAdapter中的AnnotationMethodHandlerAdapter去调用controller中的HandlerMethod。当HandlerMethod执行后会返回一个View，ViewResovler进行视图解析，解析后调用执行jsp文件对应的.class文件，最终把运行.class文件的结果响应给客户端。</code></pre><p>以上就是springmvc的执行原理。</p>
+<h1 id="2-springIOC"><a href="#2-springIOC" class="headerlink" title="2.springIOC"></a>2.springIOC</h1><h2 id="ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现"><a href="#ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现" class="headerlink" title="ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现"></a>ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现</h2><h2 id="2-1BeanFactory工厂的构建"><a href="#2-1BeanFactory工厂的构建" class="headerlink" title="2.1BeanFactory工厂的构建"></a>2.1BeanFactory工厂的构建</h2><pre><code>BeanFactory是ApplicationContext的父接口。是spring框架中的顶级容器工厂对象。
+BeanFactory只能管理bean对象，没有其他功能。比如说：AOP切面管理，propertyplaceholder的加载等。</code></pre><p>构建BeanFactory的作用就是为了管理bean对象。</p>
+<h2 id="2-2创建BeanFactory中管理的bean对象。"><a href="#2-2创建BeanFactory中管理的bean对象。" class="headerlink" title="2.2创建BeanFactory中管理的bean对象。"></a>2.2创建BeanFactory中管理的bean对象。</h2><pre><code>//配置beanfactory工厂的一些属性
+prepareBeanFactory(beanFactory);
+
+
+postProcessBeanFactory(beanFactory);加载配置beanfactory中无法处理的一些属性，如propertyplaceholder
+
+invokeBeanFactoryPostProcessors（beanFactory）；
+将上一步加载的内容，作为一个容器可以管理的bean对象注册到applicationcontext容器中。
+
+registerBeanPostProcessors（beanFactory）继续完成上一步的注册操作。
+到此配置文件中配置的bean对象都创建并注册完成。
+
+initMessageSource() ；i18n。初始化国际化消息源。
+initApplicationEventMulticaster();初始化多播事件。如ApplicationEvent事件。是spring框架中的观察者模式实现机制
+onRefresh();初始化主题资源。（ThemeSource）spring框架提供的视图主题信息。
+registerListeners();// Check for listener beans and register them.
+创建监听器，并注册
+
+finishBeanFactoryInitialization(beanFactory);
+初始化配置中出现的所有的lazy-init=false的bean对象，且bean对象必须是单例的。
+finishRefresh();发布最终事件。</code></pre><h1 id="3-看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。"><a href="#3-看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。" class="headerlink" title="3.看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。"></a>3.看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。</h1>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/19/总结-7-12/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-总结-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
