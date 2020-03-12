@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HashMap,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="###  面试涉及到的问题 你了解HashMap吗？简单说一下HashMap JDK1.8 之前 HashMap 底层是 数组和链表 结合在一起使用也就是 链表散列。  1.8之后改为数组加链表加红黑树，当链表长度大于8之后转化为红黑树，提高查找性能  HashMap 通过 key 的 hashCode 经过扰动函数处理过后得到 hash 值，然后通过 (n - 1) &amp;amp; hash 判断当">
+<meta name="keywords" content="HashMap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03-02 HashMap相关面试题">
+<meta property="og:url" content="http://yoursite.com/2020/03/12/03-02-md/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="###  面试涉及到的问题 你了解HashMap吗？简单说一下HashMap JDK1.8 之前 HashMap 底层是 数组和链表 结合在一起使用也就是 链表散列。  1.8之后改为数组加链表加红黑树，当链表长度大于8之后转化为红黑树，提高查找性能  HashMap 通过 key 的 hashCode 经过扰动函数处理过后得到 hash 值，然后通过 (n - 1) &amp;amp; hash 判断当">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-12T14:03:51.970Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="03-02 HashMap相关面试题">
+<meta name="twitter:description" content="###  面试涉及到的问题 你了解HashMap吗？简单说一下HashMap JDK1.8 之前 HashMap 底层是 数组和链表 结合在一起使用也就是 链表散列。  1.8之后改为数组加链表加红黑树，当链表长度大于8之后转化为红黑树，提高查找性能  HashMap 通过 key 的 hashCode 经过扰动函数处理过后得到 hash 值，然后通过 (n - 1) &amp;amp; hash 判断当">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/12/03-02-md/">
+
+
+
+
+
+  <title>03-02 HashMap相关面试题 | Hexo</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ca9a6e22d338248af9a724bc6caea900";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/03-02-md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">03-02 HashMap相关面试题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T16:38:09+08:00">
+                2020-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/每日一道面试题/" itemprop="url" rel="index">
+                    <span itemprop="name">每日一道面试题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>### </p>
+<h3 id="面试涉及到的问题"><a href="#面试涉及到的问题" class="headerlink" title="面试涉及到的问题"></a>面试涉及到的问题</h3><ul>
+<li><h4 id="你了解HashMap吗？简单说一下HashMap"><a href="#你了解HashMap吗？简单说一下HashMap" class="headerlink" title="你了解HashMap吗？简单说一下HashMap"></a>你了解HashMap吗？简单说一下HashMap</h4><ul>
+<li><p>JDK1.8 之前 HashMap 底层是 <strong>数组和链表</strong> 结合在一起使用也就是 <strong>链表散列</strong>。</p>
+</li>
+<li><p>1.8之后改为数组加链表加红黑树，当链表长度大于8之后转化为红黑树，提高查找性能</p>
+</li>
+<li><p><strong>HashMap 通过 key 的 hashCode 经过扰动函数处理过后得到 hash 值，然后通过 (n - 1) &amp; hash 判断当前元素存放的位置（这里的 n 指的是数组的长度），如果当前位置存在元素的话，就判断该元素与要存入的元素的 hash 值以及 key 是否相同，如果相同的话，直接覆盖，不相同就通过拉链法解决冲突。</strong></p>
+<p>所谓扰动函数指的就是 HashMap 的 hash 方法。使用 hash 方法也就是扰动函数是为了防止一些实现比较差的 hashCode() 方法 换句话说使用扰动函数之后可以减少碰撞。</p>
+</li>
+</ul>
+</li>
+<li><h4 id="为何HashMap的数组长度一定是2的次幂？"><a href="#为何HashMap的数组长度一定是2的次幂？" class="headerlink" title="为何HashMap的数组长度一定是2的次幂？"></a>为何HashMap的数组长度一定是2的次幂？</h4><p>主要是为了提高hash的效率，hash的时候是用hash值%（n-1） 如果n是2的次幂就可以使用&amp;运算。</p>
+<p>另一方面，长度是2的次幂，在resize的时候，使用transfer方法，就不用重新计算节点在桶数组中的位置，只需要用hash值&amp;新n值，</p>
+</li>
+<li><h4 id="HashMap何时扩容以及它的扩容机制？"><a href="#HashMap何时扩容以及它的扩容机制？" class="headerlink" title="HashMap何时扩容以及它的扩容机制？"></a>HashMap何时扩容以及它的扩容机制？</h4><ul>
+<li>HashMap默认的负载因子是0.75，当size大于capacity*负载因子的时候进行扩容。</li>
+<li>首先判断*2后是否到了数组最大长度，到达则返回最大长度，否则newCapacity扩为两倍。</li>
+<li>然后创建一个新的桶数组，通过transfer方法把老数组的元素复制过去。</li>
+</ul>
+</li>
+<li><h4 id="HashMap的键一般使用的String类型，还可以用别的对象吗？"><a href="#HashMap的键一般使用的String类型，还可以用别的对象吗？" class="headerlink" title="HashMap的键一般使用的String类型，还可以用别的对象吗？"></a>HashMap的键一般使用的String类型，还可以用别的对象吗？</h4><p>映射中的key必须是不可变对象 ，可以是null值，但是只能有一个null值</p>
+</li>
+<li><h4 id="HashMap是线程安全的吗，如何实现线程安全？"><a href="#HashMap是线程安全的吗，如何实现线程安全？" class="headerlink" title="HashMap是线程安全的吗，如何实现线程安全？"></a>HashMap是线程安全的吗，如何实现线程安全？</h4><ul>
+<li>不是线程安全的，可以使用Collections中的synchronizedMap方法，或者使用ConcurrentHashMap</li>
+</ul>
+</li>
+<li><h4 id="HashMap在JDK1-7，JDK1-8中的区别？"><a href="#HashMap在JDK1-7，JDK1-8中的区别？" class="headerlink" title="HashMap在JDK1.7，JDK1.8中的区别？"></a>HashMap在JDK1.7，JDK1.8中的区别？</h4><ul>
+<li>1.8中每次扩容数组大小都是2的幂次方，对扩容之后transfer的时候就不用重新计算节点在桶数组中的位置，因为节点只会放在原来的位置，或者原位置再移动2的幂次个位置。</li>
+<li>在1.7中是Entry数组，在1.8中是Node数组</li>
+<li>在1.7中链表插入是头插法，并发环境下可能有死循环的bug，1.8中链表插入是尾插法</li>
+<li>在1.8中当某个桶的节点数大于8之后可能会转化成红黑树（有一个默认最小树化大小，当size&gt;64时，才会树化，避免hash函数效果很差，节点全都挤在一个桶的情况）</li>
+</ul>
+</li>
+<li><h4 id="HashTable和ConcurrentHashMap的区别"><a href="#HashTable和ConcurrentHashMap的区别" class="headerlink" title="HashTable和ConcurrentHashMap的区别"></a>HashTable和ConcurrentHashMap的区别</h4><ul>
+<li>主要是实现线程安全的方式不同</li>
+<li>HashTable是全局锁，在进行并发操作时锁住整个Entry数组</li>
+<li>ConcurrentHashMap在jdk1.7时是使用Segment，每个Segment里面是一个Entry数组，进行并发操作时分段加锁</li>
+<li>jdk1.8时和HashMap结构相同，是通过Synchronize关键字和cas操作对每个Node节点加锁，没有hash冲突时就没有同步操作。</li>
+</ul>
+</li>
+<li><h4 id="HashTable和HashMap的区别"><a href="#HashTable和HashMap的区别" class="headerlink" title="HashTable和HashMap的区别"></a>HashTable和HashMap的区别</h4><ul>
+<li>HashTable线程安全，HashMap线程不安全</li>
+<li>HashMap效率更高</li>
+<li>HashMap 中，null 可以作为键，这样的键只有一个，可以有一个或多个键所对应的值为 null。 </li>
+<li>①创建时如果不指定容量初始值，Hashtable 默认的初始大小为11，之后每次扩充，容量变为原来的2n+1。HashMap 默认的初始化大小为16。之后每次扩充，容量变为原来的2倍。②创建时如果给定了容量初始值，那么 Hashtable 会直接使用你给定的大小，而 HashMap 会将其扩充为2的幂次方大小 </li>
+<li>JDK1.8 以后的 HashMap 在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树，以减少搜索时间。Hashtable 没有这样的机制。 </li>
+</ul>
+</li>
+<li><p>待添加</p>
+</li>
+</ul>
+<h4 id="集合框架底层数据结构"><a href="#集合框架底层数据结构" class="headerlink" title="集合框架底层数据结构"></a>集合框架底层数据结构</h4><h3 id="Collection"><a href="#Collection" class="headerlink" title="Collection"></a>Collection</h3><h4 id="1-List"><a href="#1-List" class="headerlink" title="1. List"></a>1. List</h4><ul>
+<li><strong>Arraylist：</strong> Object数组</li>
+<li><strong>Vector：</strong> Object数组</li>
+<li><strong>LinkedList：</strong> 双向链表(JDK1.6之前为循环链表，JDK1.7取消了循环)</li>
+</ul>
+<h4 id="2-Set"><a href="#2-Set" class="headerlink" title="2. Set"></a>2. Set</h4><ul>
+<li><strong>HashSet（无序，唯一）:</strong> 基于 HashMap 实现的，底层采用 HashMap 来保存元素</li>
+<li><strong>LinkedHashSet：</strong> LinkedHashSet 继承于 HashSet，并且其内部是通过 LinkedHashMap 来实现的。有点类似于我们之前说的LinkedHashMap 其内部是基于 HashMap 实现一样，不过还是有一点点区别的</li>
+<li><strong>TreeSet（有序，唯一）：</strong> 红黑树(自平衡的排序二叉树)</li>
+</ul>
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><ul>
+<li><strong>HashMap：</strong> JDK1.8之前HashMap由数组+链表组成的，数组是HashMap的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）。JDK1.8以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为8）时，将链表转化为红黑树，以减少搜索时间</li>
+<li><strong>LinkedHashMap：</strong> LinkedHashMap 继承自 HashMap，所以它的底层仍然是基于拉链式散列结构即由数组和链表或红黑树组成。另外，LinkedHashMap 在上面结构的基础上，增加了一条双向链表，使得上面的结构可以保持键值对的插入顺序。同时通过对链表进行相应的操作，实现了访问顺序相关逻辑。</li>
+<li><strong>Hashtable：</strong> 数组+链表组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的</li>
+<li><strong>TreeMap：</strong> 红黑树（自平衡的排序二叉树）</li>
+</ul>
+<h2 id="如何选用集合"><a href="#如何选用集合" class="headerlink" title="如何选用集合?"></a>如何选用集合?</h2><p>主要根据集合的特点来选用，比如我们需要根据键值获取到元素值时就选用Map接口下的集合，需要排序时选择TreeMap,不需要排序时就选择HashMap,需要保证线程安全就选用ConcurrentHashMap.当我们只需要存放元素值时，就选择实现Collection接口的集合，需要保证元素唯一时选择实现Set接口的集合比如TreeSet或HashSet，不需要就选择实现List接口的比如ArrayList或LinkedList，然后再根据实现这些接口的集合的特点来选用。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HashMap/" rel="tag"># HashMap</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/04/1104/" rel="next" title="1104">
+                <i class="fa fa-chevron-left"></i> 1104
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description">坚持就是胜利</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#面试涉及到的问题"><span class="nav-number">1.</span> <span class="nav-text">面试涉及到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#你了解HashMap吗？简单说一下HashMap"><span class="nav-number">1.1.</span> <span class="nav-text">你了解HashMap吗？简单说一下HashMap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为何HashMap的数组长度一定是2的次幂？"><span class="nav-number">1.2.</span> <span class="nav-text">为何HashMap的数组长度一定是2的次幂？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap何时扩容以及它的扩容机制？"><span class="nav-number">1.3.</span> <span class="nav-text">HashMap何时扩容以及它的扩容机制？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap的键一般使用的String类型，还可以用别的对象吗？"><span class="nav-number">1.4.</span> <span class="nav-text">HashMap的键一般使用的String类型，还可以用别的对象吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap是线程安全的吗，如何实现线程安全？"><span class="nav-number">1.5.</span> <span class="nav-text">HashMap是线程安全的吗，如何实现线程安全？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap在JDK1-7，JDK1-8中的区别？"><span class="nav-number">1.6.</span> <span class="nav-text">HashMap在JDK1.7，JDK1.8中的区别？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashTable和ConcurrentHashMap的区别"><span class="nav-number">1.7.</span> <span class="nav-text">HashTable和ConcurrentHashMap的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashTable和HashMap的区别"><span class="nav-number">1.8.</span> <span class="nav-text">HashTable和HashMap的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集合框架底层数据结构"><span class="nav-number">1.9.</span> <span class="nav-text">集合框架底层数据结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collection"><span class="nav-number">2.</span> <span class="nav-text">Collection</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-List"><span class="nav-number">2.1.</span> <span class="nav-text">1. List</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Set"><span class="nav-number">2.2.</span> <span class="nav-text">2. Set</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">3.</span> <span class="nav-text">Map</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#如何选用集合"><span class="nav-number"></span> <span class="nav-text">如何选用集合?</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">5.6k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">全站共5.6k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

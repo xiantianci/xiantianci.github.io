@@ -269,6 +269,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/19/总结-7-12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/19/总结-7-12/" itemprop="url">$总结-7/12</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-19T22:36:05+08:00">
+                2019-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  500
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-SpringMVC运行原理"><a href="#1-SpringMVC运行原理" class="headerlink" title="1.SpringMVC运行原理"></a>1.SpringMVC运行原理</h1><pre><code>如果在web.xml中设置DispatcherServlet的&lt;url-pattern&gt;为/时，当用户发起请求，请求一个控制器时，会先执行DispatcherServlet，由DispatcherServlet去调用HandlerMapping，具体调用HandlerMapping的哪个实现类根据实际配置。如果使用的是注解方式 会调用DefaultAnnotationHandlerMapping去解析url，解析后调用HandlerAdapter中的AnnotationMethodHandlerAdapter去调用controller中的HandlerMethod。当HandlerMethod执行后会返回一个View，ViewResovler进行视图解析，解析后调用执行jsp文件对应的.class文件，最终把运行.class文件的结果响应给客户端。</code></pre><p>以上就是springmvc的执行原理。</p>
+<h1 id="2-springIOC"><a href="#2-springIOC" class="headerlink" title="2.springIOC"></a>2.springIOC</h1><h2 id="ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现"><a href="#ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现" class="headerlink" title="ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现"></a>ApplicationContext容器的初始化过程：主要通过AbstractApplicationContext类中的refresh（）方法实现</h2><h2 id="2-1BeanFactory工厂的构建"><a href="#2-1BeanFactory工厂的构建" class="headerlink" title="2.1BeanFactory工厂的构建"></a>2.1BeanFactory工厂的构建</h2><pre><code>BeanFactory是ApplicationContext的父接口。是spring框架中的顶级容器工厂对象。
+BeanFactory只能管理bean对象，没有其他功能。比如说：AOP切面管理，propertyplaceholder的加载等。</code></pre><p>构建BeanFactory的作用就是为了管理bean对象。</p>
+<h2 id="2-2创建BeanFactory中管理的bean对象。"><a href="#2-2创建BeanFactory中管理的bean对象。" class="headerlink" title="2.2创建BeanFactory中管理的bean对象。"></a>2.2创建BeanFactory中管理的bean对象。</h2><pre><code>//配置beanfactory工厂的一些属性
+prepareBeanFactory(beanFactory);
+
+
+postProcessBeanFactory(beanFactory);加载配置beanfactory中无法处理的一些属性，如propertyplaceholder
+
+invokeBeanFactoryPostProcessors（beanFactory）；
+将上一步加载的内容，作为一个容器可以管理的bean对象注册到applicationcontext容器中。
+
+registerBeanPostProcessors（beanFactory）继续完成上一步的注册操作。
+到此配置文件中配置的bean对象都创建并注册完成。
+
+initMessageSource() ；i18n。初始化国际化消息源。
+initApplicationEventMulticaster();初始化多播事件。如ApplicationEvent事件。是spring框架中的观察者模式实现机制
+onRefresh();初始化主题资源。（ThemeSource）spring框架提供的视图主题信息。
+registerListeners();// Check for listener beans and register them.
+创建监听器，并注册
+
+finishBeanFactoryInitialization(beanFactory);
+初始化配置中出现的所有的lazy-init=false的bean对象，且bean对象必须是单例的。
+finishRefresh();发布最终事件。</code></pre><h1 id="3-看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。"><a href="#3-看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。" class="headerlink" title="3.看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。"></a>3.看了一些java如何学习的课程以及搭建了一个新的github项目，打算把毕设的项目部署成springMVC框架。</h1><pre><code class="java">adwawd
+adwdawd
+awd
+
+
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/18/总结-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -954,7 +1133,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -965,7 +1144,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -976,7 +1155,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1013,7 +1192,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1027,7 +1206,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">4k</span>
+    <span title="Site words total count">5.6k</span>
   
 </div>
 
@@ -1046,7 +1225,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">全站共4k字</span>
+  <span class="post-count">全站共5.6k字</span>
 </div>
         
 <div class="busuanzi-count">
